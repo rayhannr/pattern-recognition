@@ -1,6 +1,6 @@
 import re
 
-str = 'asuuuu@mail.nyuk, hehehe'
+str = 'hehe@mail.nandesuka, hehehe'
 match =  re.search(r'([\w.-]+)@([\w.-]+)', str)
 if match:
  print(match.group())

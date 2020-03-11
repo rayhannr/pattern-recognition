@@ -1,8 +1,0 @@
-Sistem Pendukung Keputusan Penentuan Pemenang Tender Pekerjaan Konstruksi dengan Metode Fuzzy AHP
-Peggi Sri Astuti, Retantyo Wardoyo
-
-Abstrak
-Pengambilan keputusan dalam penentuan pemenang tender pekerjaan konstruksi (tidak kompleks) pada pembangunan gedung kuliah Fakultas Ekonomi Univesitas Udayana (UNUD) oleh panitia tender di Bagian Perlengkapan Rektorat UNUD masih dilakukan secara manual (dengan software Microsoft Excel dan Word), sehingga untuk membantu dan mempercepat pengambilan keputusan tersebut (dalam situasi beberapa/banyak peserta tender memenuhi semua evaluasi kriteria dan memiliki harga penawaran terkoreksi terendah yang sama di bawah HPS) maka penelitian ini bertujuan untuk membangun SPK (Sistem Pendukung Keputusan) dengan metode Fuzzy AHP. Versi Fuzzy AHP yang dipakai adalah model Chang (1992) karena memiliki langkah-langkah sederhana dan mudah diaplikasikan pada penelitian ini. Hasil penelitian menunjukkan bahwa SPK yang dibangun menghasilkan perangkingan peserta 1, 2, dan 3 yang sama dengan sistem manual yang ada di Bagian Perlengkapan Rektorat UNUD, meskipun perangkingan 4, 5, 6 yang juga dihasilkan SPK ini tidak ada di sistem manual karena perangkingan 4, 5, 6 tidak memenuhi evaluasi kriteria kualifikasi (syarat untuk lulus tender adalah memenuhi semua evaluasi kriteria). Maka disimpulkan bahwa SPK yang dibangun menghasilkan informasi yang valid.
- 
-Kata kunci
-sistem pendukung keputusan, fuzzy AHP, tender, pekerjaan konstruksi

@@ -1,12 +1,13 @@
 import re
-import string
+import numpy as np
 import matplotlib.pyplot as plt
 from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 from nltk.tokenize import sent_tokenize
 from nltk.tokenize import word_tokenize 
 
-corpus = [] #array containing words inside each abstract
+corpus = [] #array containing words and the TF inside each abstract
+bag_of_words = []
 for i in range(2):
     abstract_file = open("abstrak{}.txt".format(i+1), "r")
     abstract_words = []
@@ -19,8 +20,7 @@ for i in range(2):
             sentence = sent_tokenize(line) #making array of sentences
             for word in sentence:
                 word = word.replace('\n', '').lower() #hapus newline dan buat lowercase
-                word = re.sub(r'\d+','', word) #hapus angka
-                word = word.translate(word.maketrans('','',string.punctuation)) #hapus tanda baca
+                word = re.sub(r'[^a-zA-Z]',' ', word) #hapus angka
                 word = stopwords.remove(word) #remove stopwords
                 word = stemmer.stem(word) #stem kata ke mashdarnya
                 word = word_tokenize(word) #split kalimat jadi tiap array of words
@@ -32,3 +32,17 @@ for i in range(2):
     for line in abstract_words:
         combined_line += line
     corpus.append(combined_line)
+    
+#Seeding the bag of words, containing all words in all abstracts uniquely
+for abstract in corpus:
+    bag_of_words += abstract
+    bag_of_words = np.unique(bag_of_words)
+    
+def term_frequency(abstract_list, element):
+    return abstract_list.count(element)
+
+for i in range(len(corpus)):
+    tf = []
+    for word in bag_of_words:
+        tf.append(term_frequency(corpus[i], word))
+    corpus[i] = np.stack((bag_of_words, tf)).T

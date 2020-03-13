@@ -1,4 +1,5 @@
 import re
+import math
 import numpy as np
 from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
@@ -66,3 +67,21 @@ for i in range(len(bag_of_words)):
 ## Calculating tf * idf
 tf_idf = tf.copy()
 tf_idf = np.multiply(tf_idf, idf)
+
+## Calculating Cosine Similarity
+def multiply_column_sum(doc1, doc2):
+    return np.sum(doc1 * doc2)
+
+def quadratic_sum(doc):
+    return math.sqrt(np.sum(np.square(doc)))
+
+def cosine_similarity(doc1, doc2):
+    return multiply_column_sum(doc1, doc2) / (quadratic_sum(doc1) * quadratic_sum(doc2))
+
+#Creating matrix showing similarity of each document
+doc_similarity = np.zeros((len(corpus), len(corpus)))
+for i in range(doc_similarity.shape[0]):
+    doc_similarity[i, i] = 1
+    for j in range(i+1, doc_similarity.shape[1]):
+        doc_similarity[i, j] = cosine_similarity(tf_idf[:, i], tf_idf[:, j])
+        doc_similarity[j, i] = doc_similarity[i, j]

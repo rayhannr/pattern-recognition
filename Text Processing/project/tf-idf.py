@@ -2,11 +2,10 @@ import re
 import numpy as np
 from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
-from nltk.tokenize import sent_tokenize
-from nltk.tokenize import word_tokenize 
+from nltk.tokenize import sent_tokenize, word_tokenize
 
 ## Preprocessing
-corpus = [] #array containing words and the CV inside each abstract
+corpus = [] #array containing words in each document
 for i in range(10):
     abstract_file = open("abstrak{}.txt".format(i+1), "r", encoding="utf-8")
     abstract_words = []
@@ -29,17 +28,16 @@ for i in range(10):
     
     corpus.append(abstract_words)
 
-## Calculating the Term Frequency    
-def term_frequency(document, word):
-    return document.count(word)
-    
 #Seeding the bag of words, containing all words in all abstracts uniquely
 bag_of_words = []
 for document in corpus:
     bag_of_words = np.concatenate((bag_of_words, document), axis=None)
     bag_of_words  = np.unique(bag_of_words)
 
-#Seeding the bag of words with its TF for each document
+## Calculating the Term Frequency    
+def term_frequency(document, word):
+    return document.count(word)
+
 tf = np.zeros((bag_of_words.shape[0], 10))
 for i in range(len(corpus)):
     for j in range(len(tf)):
@@ -65,6 +63,6 @@ for i in range(len(bag_of_words)):
         idf[i, 0] = document_frequency(document, bag_of_words[i], idf[i, 0])
     idf[i, 0] = inverse_document_frequency(idf[i, 0])
 
-#Calculating Wdt = tf * idf
-wdt = tf.copy()
-wdt = np.multiply(wdt, idf)
+## Calculating tf * idf
+tf_idf = tf.copy()
+tf_idf = np.multiply(tf_idf, idf)

@@ -1,3 +1,6 @@
 *.pdf
+*.ipynb
 /ThinkDSP
 /Text Processing/.ipynb_checkpoints
+/Image Processing/.ipynb_checkpoints
+/Clustering/.ipynb_checkpoints

@@ -33,19 +33,20 @@ for i in range(10):
 bag_of_words = []
 for document in corpus:
     bag_of_words = np.concatenate((bag_of_words, document), axis=None)
-    bag_of_words  = np.unique(bag_of_words)
+
+bag_of_words  = np.unique(bag_of_words)
 
 ## Calculating the Term Frequency    
 def term_frequency(document, word):
     return document.count(word)
 
-tf = np.zeros((bag_of_words.shape[0], 10))
+tf = np.zeros((10, bag_of_words.shape[0]))
 for i in range(len(corpus)):
-    for j in range(len(tf)):
-        tf[j, i] = term_frequency(corpus[i], bag_of_words[j])
+    for j in range(tf.shape[1]):
+        tf[i, j] = term_frequency(corpus[i], bag_of_words[j])
         
     #Normalizing the TF
-    tf[:, i] /= np.sum(tf[:, i])
+    tf[i, :] /= np.sum(tf[i, :])
     
     
 ## Calculating the Inverse Document Frequency
@@ -58,7 +59,7 @@ def inverse_document_frequency(df):
     document_length = 10
     return np.log(document_length/(df + 1))
 
-idf = np.zeros((tf.shape[0], 1))
+idf = np.zeros((tf.shape[1], 1))
 for i in range(len(bag_of_words)):
     for document in corpus:
         idf[i, 0] = document_frequency(document, bag_of_words[i], idf[i, 0])
@@ -66,7 +67,7 @@ for i in range(len(bag_of_words)):
 
 ## Calculating tf * idf
 tf_idf = tf.copy()
-tf_idf = np.multiply(tf_idf, idf)
+tf_idf = np.multiply(tf_idf, idf.T)
 
 ## Calculating Cosine Similarity
 def multiply_column_sum(doc1, doc2):
@@ -83,5 +84,5 @@ doc_similarity = np.zeros((len(corpus), len(corpus)))
 for i in range(doc_similarity.shape[0]):
     doc_similarity[i, i] = 1
     for j in range(i+1, doc_similarity.shape[1]):
-        doc_similarity[i, j] = cosine_similarity(tf_idf[:, i], tf_idf[:, j])
+        doc_similarity[i, j] = cosine_similarity(tf_idf[i, :], tf_idf[j, :])
         doc_similarity[j, i] = doc_similarity[i, j]
